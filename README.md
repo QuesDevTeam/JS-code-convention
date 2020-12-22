@@ -54,7 +54,7 @@
         // No method chaining more than 2
         "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
         "no-multiple-empty-lines": ["error", { "max": 1 }],
-        // Maximum line per line
+        // Maximum characters per line
         "max-len": ["error", { "code": 100 }],
         "no-else-return": "off",
         "no-use-before-define": "off",
