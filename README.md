@@ -91,7 +91,7 @@
   - Never use ```var```.
 - Instance: camel hump, starts with lower case
 - Constant: UPPER_CASE_WITH_UNDERSCORE
-- Use parentheses("(~~)") when using "&&" and "||" together, or doing complicated calculation. [example](https://github.com/airbnb/javascript#comparison--no-mixed-operators)
+- Use parentheses("(\~\~)") when using "&&" and "||" together, or doing complicated calculation. [example](https://github.com/airbnb/javascript#comparison--no-mixed-operators)
 - Assign variables where you need them, but place them in a reasonable place. [example](https://github.com/airbnb/javascript#variables--define-where-used)
 - Object: Declare every k-v pair in separate line.
 
@@ -178,9 +178,9 @@
 - Ternaries should not be nested and generally be single line expressions. [example](https://github.com/airbnb/javascript#comparison--nested-ternaries)
 
 # Conditionals
-  - if~else / switch
-    - Exhaustive if~else/case
-      - Use if~else instead of if~if when it makes sense.
+  - if\~else / switch
+    - Exhaustive if\~else/case
+      - Use if\~else instead of if\~if when it makes sense.
     - Make sure to write as close as english sentence
       ```js
       // Bad
