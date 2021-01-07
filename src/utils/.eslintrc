@@ -1,0 +1,7 @@
+{
+    "rules": {
+        "no-underscore-dangle": "off",
+        "no-await-in-loop": "off",
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    }
+}

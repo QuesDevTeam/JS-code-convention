@@ -1,0 +1,5 @@
+{
+    "rules": {
+        "promise/no-callback-in-promise": "off"
+    }
+}
