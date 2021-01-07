@@ -44,8 +44,11 @@
         "no-use-before-define": "off",
         "no-console": ["error", { "allow": ["info", "warn", "error"] }],
         "no-unused-vars": ["error", { "argsIgnorePattern": "^_$" }],
-        "promise/always-return": "off",
         "no-underscore-dangle": ["error", { "allow": ["_id", "__v", "_gridId"] }],
-        "no-plusplus": ["error"]
+        "no-plusplus": ["error"],
+        "promise/always-return": "off",
+        "promise/no-callback-in-promise": "error",
+        "promise/no-nesting": "error",
+        "promise/avoid-new": "error"
     }
 }

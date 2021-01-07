@@ -139,7 +139,69 @@
   - for: Prefer built-in function(forEach, filter, map, reduce) over plain for loop when possible.
 
 # Async-Await & Promise(developing)
-- Prefer async-await over promise
+- Prefer using async/await over returning Promise.
+  ```js
+  async function test(options) {
+    const someResult = await someFunction(options);
+
+    return someResult;
+  }
+
+  // Bad
+  function doSomething() {
+    const options = { count: undefinedVariable.length };
+    return test(options);
+  }
+
+  doSomething().then(() => console.log("Some message")).catch((_) => console.error("Error occurred."));
+  // Output:
+  //  ReferenceError: undefinedVariable is not defined at doSomething
+
+  // Good
+  async function doSomething() {
+    const options = { count: undefinedVariable.length };
+    const result = await test(options);
+
+    return result;
+  }
+
+  doSomething().then(() => console.log("Some message")).catch((_) => console.error("Error occurred."));
+  // Output:
+  //  Error occurred.
+  ```
+- Do not return any value inside Promise.<sup>[1](#no-promise-executor-return)</sup>
+  ```js
+  // Bad
+  new Promise((resolve, reject) => {
+    if (someCondition) {
+        return defaultResult;
+    }
+
+    getSomething((err, result) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(result);
+        }
+    });
+  });
+
+  // Good
+  new Promise((resolve, reject) => {
+    if (someCondition) {
+        resolve(defaultResult);
+        return;
+    }
+
+    getSomething((err, result) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(result);
+        }
+    });
+  });
+  ```
 
 # Import & Export(developing)
 - export: Let someone else to do this section... See below:
@@ -156,3 +218,6 @@
 # References
 - https://github.com/felixge/node-style-guide
 - https://github.com/airbnb/javascript#naming--uppercase
+
+# Notes
+- <a name="no-promise-executor-return">Do not return any value inside Promise</a>: This rule is defined in [eslint](https://eslint.org/docs/rules/no-promise-executor-return), but for some reason I couldn't make it to work. Please make a PR whever was able to fix this.
