@@ -13,60 +13,6 @@
   - eslint-plugin-promise
   - eslint-plugin-react
 
-# Base .eslintrc.json
-```json
-{
-    "env": {
-        "browser": true,
-        "es6": true,
-        "node": true,
-        "mocha": true
-    },
-    "extends": [
-        "airbnb",
-        "plugin:promise/recommended",
-        "plugin:mocha/recommended"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "promise",
-        "mocha"
-    ],
-    "rules": {
-        // One true brace style
-        // https://eslint.org/docs/rules/brace-style.html
-        "brace-style": [2, "1tbs", { "allowSingleLine": false }],
-        // Require following curly brace always
-        "curly": ["error", "all"],
-        // Don't use single character naming
-        "id-length": ["error", { "exceptions": ["i", "_"] }],
-        // No method chaining more than 2
-        "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
-        "no-multiple-empty-lines": ["error", { "max": 1 }],
-        // Maximum characters per line
-        "max-len": ["error", { "code": 100 }],
-        "no-else-return": "off",
-        "no-use-before-define": "off",
-        "no-console": ["error", { "allow": ["info", "warn", "error"] }],
-        "no-unused-vars": ["error", { "argsIgnorePattern": "^_$" }],
-        "promise/always-return": "off",
-        "no-underscore-dangle": ["error", { "allow": ["_id", "__v", "_gridId"] }],
-        "no-plusplus": ["error"]
-    }
-}
-```
-
 # General
 - Don't spam eslint-disable. Try to understand what's the problem is and conform.
 - Be sure to re-enable disabled lint by ``` // eslint-enable ~~ ``` after disabling temporarily.
@@ -193,7 +139,69 @@
   - for: Prefer built-in function(forEach, filter, map, reduce) over plain for loop when possible.
 
 # Async-Await & Promise(developing)
-- Prefer async-await over promise
+- Prefer using async/await over returning Promise.
+  ```js
+  async function test(options) {
+    const someResult = await someFunction(options);
+
+    return someResult;
+  }
+
+  // Bad
+  function doSomething() {
+    const options = { count: undefinedVariable.length };
+    return test(options);
+  }
+
+  doSomething().then(() => console.log("Some message")).catch((_) => console.error("Error occurred."));
+  // Output:
+  //  ReferenceError: undefinedVariable is not defined at doSomething
+
+  // Good
+  async function doSomething() {
+    const options = { count: undefinedVariable.length };
+    const result = await test(options);
+
+    return result;
+  }
+
+  doSomething().then(() => console.log("Some message")).catch((_) => console.error("Error occurred."));
+  // Output:
+  //  Error occurred.
+  ```
+- Do not return any value inside Promise.<sup>[1](#no-promise-executor-return)</sup>
+  ```js
+  // Bad
+  new Promise((resolve, reject) => {
+    if (someCondition) {
+        return defaultResult;
+    }
+
+    getSomething((err, result) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(result);
+        }
+    });
+  });
+
+  // Good
+  new Promise((resolve, reject) => {
+    if (someCondition) {
+        resolve(defaultResult);
+        return;
+    }
+
+    getSomething((err, result) => {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(result);
+        }
+    });
+  });
+  ```
 
 # Import & Export(developing)
 - export: Let someone else to do this section... See below:
@@ -210,3 +218,6 @@
 # References
 - https://github.com/felixge/node-style-guide
 - https://github.com/airbnb/javascript#naming--uppercase
+
+# Notes
+- <a name="no-promise-executor-return">Do not return any value inside Promise</a>: This rule is defined in [eslint](https://eslint.org/docs/rules/no-promise-executor-return), but for some reason I couldn't make it to work. Please make a PR whever was able to fix this.
