@@ -204,16 +204,134 @@
   ```
 
 # Import & Export(developing)
-- export: Let someone else to do this section... See below:
-  - https://github.com/airbnb/javascript#modules
-  - https://github.com/airbnb/javascript#naming--filename-matches-export
-  - https://github.com/airbnb/javascript#naming--camelCase-default-export
-  - https://github.com/airbnb/javascript#naming--PascalCase-singleton
-  - https://github.com/airbnb/javascript#naming--Acronyms-and-Initialisms
-  - https://github.com/airbnb/javascript#naming--uppercase
-- es6 style import
-- refrain using "require"
-- import order: system - library - controllers - utility
+## export
+- Prefer integrated export.
+  ```js
+  // bad
+  export default asdf;
+  export zxcv;
+  export function qwer() {}
+
+  // good
+  export {
+    asdf as default,
+    zxcv,
+    qwer,
+    ...
+  };
+  ```
+
+## import
+- Use ES6 style import
+  - Refrain using "require"
+    - Exception: Some packages(ex. OracleDB ~4.0.1) don't support ES6 import.
+- import order: system > library > models > controllers > utility > constants
+  ```js
+    // libraries
+    import express from 'express';
+    import path from 'path';
+    // models
+    import Voter from '../../models/voter';
+    import Admin, { ViewerAdmin, SubAdmin } from '../../models/admin';
+    // controllers
+    import pollController from '../../controllers/api/poll';
+    import voterController from '../../controllers/api/voter';
+    import pollRateController from '../../controllers/api/pollRate';
+    import pollResultController from '../../controllers/api/pollResult';
+    import permissionController from '../../controllers/api/permission';
+    // utilities
+    import {
+      // ... some methods ...
+    } from '../../utils/router';
+    import QuesError from '../../utils/error';
+    // constants
+    import ACTIONS from '../../resources/actions.json';
+  ```
+- Imports from single file must be executed by single import
+  ```js
+  // bad
+  import foo from 'foo';
+  import { named1, named2 } from 'foo';
+
+  // good
+  import foo, { named1, named2 } from 'foo';
+  ```
+- A base filename should exactly match the name of its default export.
+  ```js
+  // bad
+  import 
+
+  // good
+  ```
+- Exclude file ext
+  ```js
+  // bad
+  import foo from '../foo.js';
+  
+  // good
+  import foo from '../foo';
+  ```
+## Detail rules per type of module
+- For models(or if there's something including or representing whole file's concept)
+  - export model as default
+    ```js
+    // export
+    export {
+      Vote as default,
+    }
+
+    export default Vote;
+
+    // import
+    import Vote from '/path/to/model';
+    ```
+  - export by-products(ex. discriminated models)
+    ```js
+    // export
+    export {
+      Vote as default,
+      OpenVote,
+    }
+
+    export default Vote;
+    export { Open }
+
+    // import
+    import Vote, { OpenVote } from '/path/to/model';
+    ```
+- For controllers(or bunch of functions for specific feature's)
+  ```js
+  // export
+  export default {
+    submitVotes,
+    getVotes,
+    deleteVotes,
+    verifyVotes,
+  };
+
+  // import
+  import voteController from '/path/to/controller';
+  ```
+- For utilities(or something for common usage)
+  ```js
+  // export
+  export {
+    argumentsExists,
+    argumentsExistsPromise,
+    fallback,
+    or,
+    exists,
+    range,
+    under,
+    toString,
+    toInt,
+    isValidMongoDbId,
+    isFunction,
+  };
+
+  // import
+  import { exists, toString } from '/path/to/util';
+  ```
 
 # References
 - https://github.com/felixge/node-style-guide
