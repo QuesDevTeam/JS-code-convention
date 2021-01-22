@@ -227,6 +227,8 @@
     - Exception: Some packages(ex. OracleDB ~4.0.1) don't support ES6 import.
 - import order: system > library > models > controllers > utility > constants
   ```js
+    // system
+    import fs from 'fs';
     // libraries
     import express from 'express';
     import path from 'path';
@@ -256,14 +258,7 @@
   // good
   import foo, { named1, named2 } from 'foo';
   ```
-- A base filename should exactly match the name of its default export.
-  ```js
-  // bad
-  import 
-
-  // good
-  ```
-- Exclude file ext
+- Exclude file extension
   ```js
   // bad
   import foo from '../foo.js';
