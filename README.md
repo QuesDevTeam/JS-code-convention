@@ -203,7 +203,7 @@
   });
   ```
 
-# Import & Export(developing)
+# Import & Export
 ## export
 - Prefer integrated export.
   ```js
