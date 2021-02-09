@@ -289,9 +289,6 @@
       OpenVote,
     }
 
-    export default Vote;
-    export { Open }
-
     // import
     import Vote, { OpenVote } from '/path/to/model';
     ```
