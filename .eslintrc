@@ -1,4 +1,3 @@
-
 {
     "env": {
         "browser": true,
@@ -47,6 +46,7 @@
         "no-underscore-dangle": ["error", { "allow": ["_id", "__v", "_gridId"] }],
         "no-plusplus": "error",
         "quotes": "off",
+        "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
         "promise/always-return": "off",
         "promise/no-callback-in-promise": "error",
         "promise/no-nesting": "error",

@@ -5,13 +5,14 @@
 - Sometimes you have to accept what we have and carry on. But don't half ass the shit. Give it a several take before giving up. Leave some comment at least.
 
 # Premise
-- These rules are based on following esline plugins
-  - eslint-config-airbnb
-  - eslint-plugin-import
-  - eslint-plugin-jsx-a11y
-  - eslint-plugin-mocha
-  - eslint-plugin-promise
-  - eslint-plugin-react
+- These rules are based on following eslint plugins
+  - eslint@7.19.0
+  - eslint-config-airbnb@18.2.1
+  - eslint-plugin-import@2.22.1
+  - eslint-plugin-jsx-a11y@6.4.1
+  - eslint-plugin-mocha@8.0.0
+  - eslint-plugin-promise@4.2.1
+  - eslint-plugin-react@7.22.0
 
 # General
 - Don't spam eslint-disable. Try to understand what's the problem is and conform.
@@ -289,9 +290,6 @@
       OpenVote,
     }
 
-    export default Vote;
-    export { Open }
-
     // import
     import Vote, { OpenVote } from '/path/to/model';
     ```
@@ -332,6 +330,3 @@
 # References
 - https://github.com/felixge/node-style-guide
 - https://github.com/airbnb/javascript#naming--uppercase
-
-# Notes
-- <a name="no-promise-executor-return">Do not return any value inside Promise</a>: This rule is defined in [eslint](https://eslint.org/docs/rules/no-promise-executor-return), but for some reason I couldn't make it to work. Please make a PR whever was able to fix this.
